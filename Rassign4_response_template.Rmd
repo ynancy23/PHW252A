@@ -1,0 +1,117 @@
+---
+title: "R Assignment 4 - Super Learner"
+author: "Your Name Here"
+date: "The Date"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+
+```{r echo=F}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+**1. Read in the data set; assign it to object `dt`, and explore it with the `names`, `head` and `summary` functions. Use the `nrow` function to count the number of observations in the data set. Assign it to `n`. [1pt]**
+```{r 1}
+
+```
+
+## Code discrete Super Learner
+
+**2. Briefly discuss the motivation for using discrete Super Learner (a.k.a., the cross-validation selector). [1pt]**
+
+**3. Set the seed to 252, and then split the data into $V=5$ folds. [1pt]**
+```{r 3}
+
+```
+
+**4. Create a matrix `pred` with $n$ rows and 4 columns to hold the cross-validated predictions from each candidate algorithm. [0.5pt]**
+```{r 4}
+
+```
+**5. Create an empty matrix `cv.risk` with $V$ rows and 4 columns for each algorithm, evaluated at each fold. [0.5pt]**
+```{r 5}
+
+```
+**6. Use  a `for` loop to fit each estimator on the training set; predict the expected MUAC for the communities in the validation set, and evaluate the cross-validated risk. [6pt]**
+\emph{Hint: do all of the following within the `for` loop.}
+
+(a) Create the validation set  `valid`, consisting of observations with `fold` equal to `v`.
+(b) Create the training set `train`, consisting of observations with `fold` not equal to `v`.
+(c) Use `glm` to fit each algorithm on the training set. Be sure to specify `data=train`.
+(d) For each algorithm, predict the average MUAC for each community in the validation set. Be sure to specify the `type='response'` and `newdata=valid`.
+(e) Save the cross-validated predictions for the validation set at the appropriate rows in the matrix `pred`.
+(f) Estimate the cross-validated risk for each algorithm with the L2 loss function. Take the average of the squared differences between the observed outcomes $Y$ and the predicted outcomes. Assign the cross-validated risks as a row in the matrix `cv.risk`.
+
+```{r 6}
+
+```
+
+**7. Select the algorithm with the lowest average cross-validated risk across the folds. [0.5pt]**
+```{r 7}
+
+```
+**8. Fit the chosen algorithm on all the data. [0.5pt]**
+```{r 8}
+
+```
+**9. How can we come up with an even better prediction function than the one selected?** (This question is not about improving computing in `R`, but about improving our ability to predict the outcome.) **[1pt]**
+
+
+## Use the `SuperLearner` package to build the best combination of algorithms.
+
+**10. Load the `SuperLearner` package with the `library` function and set the seed to `252`. [0.5pt]**
+```{r 10}
+
+```
+**11. Use the `source` function to load script file `Rassign4.Wrappers.R`, which includes  the wrapper functions for the pre-specified parametric regressions. [1pt]**
+```{r 11}
+
+```
+**12. Specify the algorithms to be included in Super Learner's library. [1pt]**
+```{r 12}
+
+```
+**13. Create data frame `X` with the predictor variables. [1pt]**
+```{r 13}
+
+```
+**14. Run the `SuperLearner` function. Be sure to specify the outcome `Y`, the predictors `X` and  the library `SL.library`. Also include `cvControl=list(V=5)` in order to get 5-fold cross-validation. [1pt]**
+```{r 14}
+
+```
+**15. Explain the output to relevant policy makers and stake-holders. What do the columns `Risk` and `Coef` mean?  Are the cross-validated risks from `SuperLearner` close to those obtained by your code? [1pt]**
+```{r 15}
+
+```
+
+## Evaluate the performance of Super Learner
+
+
+**16. Explain why we need `CV.SuperLearner`. [1pt]**
+
+**17. Run `CV.SuperLearner` using an additional 5-folds of cross-validation. [1pt]**
+```{r 17}
+
+```
+
+**18. Explore and comment on the output. [1pt]**
+
+```{r 18}
+
+```
+
+
+## Bonus: Completely Optional - Coding the weights
+
+Write your own `R` code to estimate the optimal convex combination of weights using the L2 loss function. (In other words, do not use the `SuperLearner` package.)  Apply your weights to generate the ensemble based predictions. **[2 pts]**
+
+
+```{r bonus}
+
+```
+
